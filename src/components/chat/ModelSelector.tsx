@@ -1,32 +1,39 @@
+// src/components/chat/ModelSelector.tsx
 'use client';
 
-import { ChevronDown } from 'lucide-react';
+import { Zap, Brain } from 'lucide-react';
 
 interface ModelSelectorProps {
-  selectedModel: 'gemini-2.5-flash' | 'gemini-2.5-pro';
-  onModelChange: (model: 'gemini-2.5-flash' | 'gemini-2.5-pro') => void;
+  selected: 'flash' | 'pro';
+  onChange: (model: 'flash' | 'pro') => void;
 }
 
-export default function ModelSelector({ selectedModel, onModelChange }: ModelSelectorProps) {
-  const models = [
-    { id: 'gemini-2.5-flash', name: 'Gemini 2.5 Flash', description: 'Fast responses' },
-    { id: 'gemini-2.5-pro', name: 'Gemini 2.5 Pro', description: 'Advanced reasoning' },
-  ];
-
+export default function ModelSelector({ selected, onChange }: ModelSelectorProps) {
   return (
-    <div className="relative">
-      <select
-        value={selectedModel}
-        onChange={(e) => onModelChange(e.target.value as 'gemini-2.5-flash' | 'gemini-2.5-pro')}
-        className="appearance-none bg-[#2D2D2D] text-white px-4 py-2 pr-8 rounded-lg border border-gray-700 focus:border-blue-500 focus:outline-none"
+    <div className="flex items-center gap-2 bg-[#2D2D2D] rounded-full p-1">
+      <button
+        onClick={() => onChange('flash')}
+        className={`flex items-center gap-2 px-4 py-2 rounded-full transition-colors ${
+          selected === 'flash'
+            ? 'bg-blue-600 text-white'
+            : 'text-gray-400 hover:text-white'
+        }`}
       >
-        {models.map((model) => (
-          <option key={model.id} value={model.id}>
-            {model.name}
-          </option>
-        ))}
-      </select>
-      <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+        <Zap className="w-4 h-4" />
+        <span className="text-sm font-medium">2.5 Flash</span>
+      </button>
+      
+      <button
+        onClick={() => onChange('pro')}
+        className={`flex items-center gap-2 px-4 py-2 rounded-full transition-colors ${
+          selected === 'pro'
+            ? 'bg-blue-600 text-white'
+            : 'text-gray-400 hover:text-white'
+        }`}
+      >
+        <Brain className="w-4 h-4" />
+        <span className="text-sm font-medium">2.5 Pro</span>
+      </button>
     </div>
   );
 }
